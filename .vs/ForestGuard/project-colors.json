@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "ed0600ff-9c39-41f5-bfb8-e9e95f3656c9": {
+      "ProjectGuid": "ed0600ff-9c39-41f5-bfb8-e9e95f3656c9",
+      "DisplayName": "ForestGuard",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
