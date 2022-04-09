@@ -47,6 +47,10 @@
             "Azure.Messaging.EventHubs.Processor": {
               "target": "Package",
               "version": "[5.6.2, )"
+            },
+            "Microsoft.AspNetCore.SignalR.Client": {
+              "target": "Package",
+              "version": "[6.0.3, )"
             }
           },
           "imports": [

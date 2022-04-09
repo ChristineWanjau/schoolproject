@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.SignalR.Client;
+
+using static ForestGuard.Pages.IndexModel;
 
 namespace ForestGuard.Pages
 {
@@ -17,23 +21,38 @@ namespace ForestGuard.Pages
             _logger = logger;
         }
 
-        public class Sensor
+        public class tempValues
         {
+            public int? messageId { get; set; }
             public string? deviceId { get; set; }
 
             public int? Temperature { get; set; }
 
-            public int? Humidity{ get; set; }
+            public int? Humidity { get; set; }
 
-            public DateTime? dateTime { get; set; }
         }
+
+        List<int>? tempData = new List<int>();
+
+        public List<tempValues>? Result { get; set; } = new List<tempValues>();
+
+        public string? values { get; set; }
+
         public async void OnGet()
         {
            await ReceiveMessagesFromDeviceAsync();
         }
 
-        private static async Task ReceiveMessagesFromDeviceAsync()
+        private async Task ReceiveMessagesFromDeviceAsync()
+
         {
+
+            var hubConnection = new HubConnectionBuilder()
+                .WithUrl("http://localhost:44348/message").
+                Build();
+
+           await hubConnection.StartAsync();
+                
             string connectionString = "Endpoint=sb://ihsuprodsouthafricanorthres005dednamespace.servicebus.windows.net/Endpoint=sb://ihsuprodsouthafricanorthres005dednamespace.servicebus.windows.net/;SharedAccessKeyName=iothubowner;SharedAccessKey=PkZ083+rNhOre3ekmeNBWWFKV0IvZLGK+sHKAltELJ0=;EntityPath=iothub-ehub-forestguar-16791339-e3c4c749f9";
             string eventhubName = "iothub-ehub-forestguar-16791339-e3c4c749f9";
 
@@ -59,22 +78,25 @@ namespace ForestGuard.Pages
                 // More information on the "EventProcessorClient" and its benefits can be found here:
                 await foreach (PartitionEvent partitionEvent in consumer.ReadEventsAsync())
                 {
-                    Console.WriteLine($"\nMessage received on partition {partitionEvent.Partition.PartitionId}:");
+                    //Console.WriteLine($"\nMessage received on partition {partitionEvent.Partition.PartitionId}:");
 
                     string data = Encoding.UTF8.GetString(partitionEvent.Data.Body.ToArray());
                     Console.WriteLine($"\tMessage body: {data}");
 
-                    Console.WriteLine("\tApplication properties (set by device):");
-                    foreach (KeyValuePair<string, object> prop in partitionEvent.Data.Properties)
-                    {
-                        PrintProperties(prop);
-                    }
+                    await hubConnection.InvokeAsync("Broadcast", "messagehub", data);
 
-                    Console.WriteLine("\tSystem properties (set by IoT Hub):");
-                    foreach (KeyValuePair<string, object> prop in partitionEvent.Data.SystemProperties)
-                    {
-                        PrintProperties(prop);
-                    }
+                    
+                    //Console.WriteLine("\tApplication properties (set by device):");
+                    //foreach (KeyValuePair<string, object> prop in partitionEvent.Data.Properties)
+                    //{
+                       // PrintProperties(prop);
+                   // }
+
+                    //Console.WriteLine("\tSystem properties (set by IoT Hub):");
+                    //foreach (KeyValuePair<string, object> prop in partitionEvent.Data.SystemProperties)
+                    //{
+                        //PrintProperties(prop);
+                    //}
                 }
             }
             catch (Exception)
@@ -94,6 +116,15 @@ namespace ForestGuard.Pages
             Console.WriteLine($"\t\t{prop.Key}: {propValue}");
         }
 
+    }
+
+   public class MessageHub : Hub 
+    {
+        public  async Task Broadcast(string sender, tempValues values)
+        {
+          
+            await Clients.All.SendAsync("ReceiveMessage", sender, values);
+        }
     }
 
    

@@ -35,3 +35,13 @@ C:\Users\hp\source\repos\ForestGuard\ForestGuard\bin\Debug\net6.0\Microsoft.Azur
 C:\Users\hp\source\repos\ForestGuard\ForestGuard\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\hp\source\repos\ForestGuard\ForestGuard\bin\Debug\net6.0\System.Memory.Data.dll
 C:\Users\hp\source\repos\ForestGuard\ForestGuard\obj\Debug\net6.0\ForestGuard.csproj.CopyComplete
+C:\Users\hp\source\repos\ForestGuard\ForestGuard\bin\Debug\net6.0\Microsoft.AspNetCore.Connections.Abstractions.dll
+C:\Users\hp\source\repos\ForestGuard\ForestGuard\bin\Debug\net6.0\Microsoft.AspNetCore.Http.Connections.Client.dll
+C:\Users\hp\source\repos\ForestGuard\ForestGuard\bin\Debug\net6.0\Microsoft.AspNetCore.Http.Connections.Common.dll
+C:\Users\hp\source\repos\ForestGuard\ForestGuard\bin\Debug\net6.0\Microsoft.AspNetCore.SignalR.Client.dll
+C:\Users\hp\source\repos\ForestGuard\ForestGuard\bin\Debug\net6.0\Microsoft.AspNetCore.SignalR.Client.Core.dll
+C:\Users\hp\source\repos\ForestGuard\ForestGuard\bin\Debug\net6.0\Microsoft.AspNetCore.SignalR.Common.dll
+C:\Users\hp\source\repos\ForestGuard\ForestGuard\bin\Debug\net6.0\Microsoft.AspNetCore.SignalR.Protocols.Json.dll
+C:\Users\hp\source\repos\ForestGuard\ForestGuard\bin\Debug\net6.0\Microsoft.Extensions.Features.dll
+C:\Users\hp\source\repos\ForestGuard\ForestGuard\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\hp\source\repos\ForestGuard\ForestGuard\bin\Debug\net6.0\System.IO.Pipelines.dll

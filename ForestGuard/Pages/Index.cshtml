@@ -5,6 +5,67 @@
 }
 
 <!-- Area Chart -->
+                       <script type="text/javascript">
+                           document.addEventListener('DOMContentLoaded', function() {
+
+                                var samples = 100;
+                                var speed = 250;
+                                var values = [];
+                                var labels = [];
+                                var charts = [];
+                                var value = 0;
+
+                                values.length = samples;
+                                labels.length = samples;
+                                values.fill(0);
+                                labels.fill(0);
+                               var temperatureGraph = document.getElementById('temperatureGraph').getContext('2d');
+            
+                    new Chart(temperatureGraph,
+                        {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: values,
+                    label: "Temperature",
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    fill:false
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: "Temperature over the last 100 data points"
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            max: 40,
+                            max: 40,
+                            min:20,
+                        }
+                    }]
+                }
+            }
+          }
+           );
+
+           var connection = new signalR.HubConnection("messagehub");
+
+            connection.on('Broadcast',
+                function(sender, message) {
+                    values.push(message.temperature);
+                    values.shift();
+
+                    chart.update();
+                });
+
+            connection.start();
+        
+});
+                       </script> 
                         <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
@@ -29,8 +90,9 @@
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
+                                        <canvas id="temperatureGraph"></canvas>
                                     </div>
+                                
                                 </div>
                             </div>
                         </div>
